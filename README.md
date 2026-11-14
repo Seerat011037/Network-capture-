@@ -11,7 +11,7 @@ Capture live network traffic on **Kali Linux**, filter it by protocol, identify 
 | **Protocols identified** | DNS, ICMP, TCP, ARP, TLSv1.3 |
 | **Deliverables** | `capture/network_capture.pcap` and this report |
 
-> Only capture traffic on networks you own or have permission to monitor.
+
 
 ---
 
@@ -197,40 +197,3 @@ Observations:
 - The repeated TCP SYN retransmissions to port 80 show a connection that was never completed, which is a useful pattern to recognise when troubleshooting.
 - No HTTP packets appeared in the screenshots above, because the plain-HTTP connection did not complete. Re-run `curl http://neverssl.com` if you want to capture HTTP.
 
-## Repository structure
-
-```text
-network-capturing-by-wireshark/
-├── README.md
-├── index.html
-├── capture/
-│   └── network_capture.pcap
-└── screenshots/
-    └── (10 screenshots)
-```
-
-## Quick copy: all commands in one place
-
-```bash
-sudo apt update
-sudo apt install wireshark tshark -y
-sudo usermod -aG wireshark $USER
-tshark -D
-wireshark &
-
-# In a second terminal while capturing:
-ping -c 10 google.com
-nslookup example.com
-curl http://neverssl.com
-curl -I https://www.wikipedia.org
-
-# After saving the capture:
-editcap -F pcap network_capture.pcapng network_capture.pcap
-file network_capture.pcap
-capinfos network_capture.pcap
-tshark -r network_capture.pcap -q -z io,phs
-```
-
-## Skills practised
-
-Packet capture, protocol analysis, display filters, TCP/IP fundamentals, Kali Linux command line, technical documentation.
